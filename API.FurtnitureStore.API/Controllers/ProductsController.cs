@@ -20,13 +20,14 @@ namespace API.FurtnitureStore.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Product>> Get()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Include(p => p.OrderDetails).ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDetails(int id)
         {
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _context.Products.Include(p => p.OrderDetails)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             if(product == null) return NotFound();
             

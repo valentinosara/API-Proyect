@@ -81,7 +81,7 @@ namespace API.FurtnitureStore.API.Controllers
 
             if(existingOrder == null) return NotFound();
 
-            _context.OrderDetails.RemoveRange(order.OrderDetails);
+            _context.OrderDetails.RemoveRange(existingOrder.OrderDetails);
             _context.Orders.Remove(existingOrder);
             await _context.SaveChangesAsync();
             return NoContent();
